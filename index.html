@@ -150,6 +150,8 @@ img {
 firebase.initializeApp(config); 
 var dbRef = firebase.database().ref().child("db105");
 
+var index = 1;
+
 dbRef.on("value",function(s) {
   if(s.hasChild("values")) {
   let ss = s.child("values")
@@ -202,6 +204,7 @@ dbRef.on("value",function(s) {
       d4.style.opacity = 0;
       d5.style.opacity = 0;
       d6.style.opacity = 0;
+      index = 1;
   }
 });
 
@@ -225,8 +228,6 @@ function getD(x) {
         return "";
     }
 }
-
-var index = 1;
 
 var b1 = document.getElementById("b1");
 var b2 = document.getElementById("b2");
