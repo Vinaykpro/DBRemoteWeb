@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DB Remote Web</title>
+       <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        
+        <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+        
+        <style>
+            body {
+    padding:0;
+    margin:0;
+    background:#ab00ff;
+}
+
+#selectionarea {
+    height:auto;
+    width:100%;
+    background:green;
+    padding-bottom:20px;
+}
+
+#inputarea {
+    height:auto;
+    width:100%;
+    background:#ab00ff;
+}
+
+button {
+    width:20vw;
+    height:20vw;
+    border-radius:20px;
+    text-decoration:none;
+    outline:none;
+    border:none;
+    margin-left:10vw;
+    margin-top:20px;
+    font-size:30px;
+    color:#333;
+}
+
+#unq , #clr {
+    width:40vw;
+    height:auto;
+    padding:10px;
+    margin-left:6vw;
+    font-size:17px;
+}
+
+img {
+    height:12vh;
+    width:12vh;
+    margin-top:6vh;
+    opacity:0;
+}
+
+#d1 {
+    transform:rotateZ(36deg);
+    margin-left:calc(10vw);
+}
+
+#d2 {
+    transform:rotateZ(110deg);
+    margin-left:calc(80vw - 24vh);
+}
+
+#d3 {
+    transform:rotateZ(70deg);
+    margin-left:calc(42vw - 12vh);
+}
+
+#d4 {
+    transform:rotateZ(99deg);
+    margin-left:calc(34vw - 12vh);
+}
+
+#d5 {
+    transform:rotateZ(10deg);
+    margin-left:calc(10vw);
+}
+
+#d6 {
+    transform:rotateZ(30deg);
+    margin-left:calc(80vw - 24vh);
+}
+        </style>
+        
+    </head>
+    <body>
+        <div id="selectionarea">
+            
+            <img id="d1" src="d1.png" />
+            
+            <img id="d2" src="d2.png" />
+            
+            <img id="d3" src="d3.png" />
+            
+            <img id="d4" src="d4.png" />
+            
+            <img id="d5" src="d5.png" />
+            
+            <img id="d6" src="d6.png" />
+        </div>
+        
+        
+        
+        <div id="inputarea">
+            <button id="b1">1</button>
+            <button id="b2">2</button>
+            <button id="b3">3</button>
+            <button id="b4">4</button>
+            <button id="b5">5</button>
+            <button id="b6">6</button>
+            
+            <button id="unq">Unique (1 to 6)</button>
+            <button id="clr">Clear Selection</button>
+            
+        </div>
+    </body>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <script>
+    
+    var d1 = document.getElementById("d1");
+    var d2 = document.getElementById("d2");
+    var d3 = document.getElementById("d3");
+    var d4 = document.getElementById("d4");
+    var d5 = document.getElementById("d5");
+    var d6 = document.getElementById("d6");
+    
+    var config = {
+    apiKey: "AIzaSyCPBVjI04lfwt3WvsK2mhBR76D0dWdoAAg",
+
+    authDomain: "db-101-e152c.firebaseapp.com",
+
+    databaseURL: "https://db-101-e152c-default-rtdb.firebaseio.com",
+
+    projectId: "db-101-e152c",
+
+    storageBucket: "db-101-e152c.appspot.com",
+
+    messagingSenderId: "639302982666",
+
+    appId: "1:639302982666:web:7f05fa22e30086d5ce93f3",
+
+    measurementId: "G-2JYRQNRF8L"
+  };
+
+firebase.initializeApp(config); 
+var dbRef = firebase.database().ref().child("db105");
+
+dbRef.on("value",function(s) {
+  if(s.hasChild("values")) {
+  let ss = s.child("values")
+    if(ss.hasChild("1"))
+    {  d1.src = getD(ss.child("1").val())
+       d1.style.opacity = 100;
+    }
+    else
+    { d1.style.opacity = 0;}
+    
+    if(ss.hasChild("2"))
+    {  d2.src = getD(ss.child("2").val())
+       d2.style.opacity = 100;
+    }
+    else
+    {  d2.style.opacity = 0;}
+    
+    if(ss.hasChild("3"))
+    { d3.src = getD(ss.child("3").val())
+      d3.style.opacity = 100;
+    }
+    else
+    { d3.style.opacity = 0;}
+    
+    if(ss.hasChild("4"))
+    { d4.src = getD(ss.child("4").val())
+      d4.style.opacity = 100;
+    }
+    else
+    { d4.style.opacity = 0;}
+    
+    if(ss.hasChild("5"))
+    { d5.src = getD(ss.child("5").val())
+      d5.style.opacity = 100;
+    }
+    else
+    { d5.style.opacity = 0; }
+    
+    if(ss.hasChild("6"))
+    {  d6.src = getD(ss.child("6").val())
+       d6.style.opacity = 100;
+    }
+    else
+    {  d6.style.opacity = 0; }
+      
+  } else {
+      d1.style.opacity = 0;
+      d2.style.opacity = 0;
+      d3.style.opacity = 0;
+      d4.style.opacity = 0;
+      d5.style.opacity = 0;
+      d6.style.opacity = 0;
+  }
+});
+
+
+
+function getD(x) {
+    switch(x) {
+        case 0:
+        return "d1.png";
+        case 1:
+        return "d2.png";
+        case 2:
+        return "d3.png";
+        case 3:
+        return "d4.png";
+        case 4:
+        return "d5.png";
+        case 5:
+        return "d6.png";
+        default:
+        return "";
+    }
+}
+
+var index = 1;
+
+var b1 = document.getElementById("b1");
+var b2 = document.getElementById("b2");
+var b3 = document.getElementById("b3");
+var b4 = document.getElementById("b4");
+var b5 = document.getElementById("b5");
+var b6 = document.getElementById("b6");
+
+var unq = document.getElementById("unq");
+var clr = document.getElementById("clr");
+
+b1.onclick = () => {
+    setV(index,0)
+}
+
+b2.onclick = () => {
+    setV(index,1)
+}
+
+b3.onclick = () => {
+    setV(index,2)
+}
+
+b4.onclick = () => {
+    setV(index,3)
+}
+
+b5.onclick = () => {
+    setV(index,4)
+}
+
+b6.onclick = () => {
+    setV(index,5)
+}
+
+unq.onclick = () => {
+    for(let i=1;i<=6;i++)
+      dbRef.child("values").child(i).set(i-1);
+    index = 7;
+}
+
+clr.onclick = () => {
+    dbRef.child("values").set(null);
+    index = 1;
+}
+
+function setV(pos,val) {
+    if(pos>6) {
+        alert("All dices choosen");
+    } else {
+        dbRef.child("values").child(pos+"").set(val);
+        index++;
+    }
+}
+
+    </script>
+    
+    
+</html>
